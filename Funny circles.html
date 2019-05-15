@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myCanvas" width="1368px" height="768px" style="border:1px solid #d3d3d3;">
+    <script>
+        function Circle(x, y, radius) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.setY = function (y) {
+                this.y = y;
+            }
+        }
+        function randomHex() {
+            return Math.floor(Math.random() * 255)
+        }
+        function randomColor() {
+            let red = randomHex();
+            let green = randomHex();
+            let blue = randomHex();
+            return "rgb(" + red + "," + green + "," + blue + ")";
+        }
+        let cir = document.getElementById('myCanvas').getContext('2d');
+        let radius = Math.floor(Math.random() * 80);
+        let x = Math.floor(Math.random()*(1200-radius));
+        let y = Math.floor(Math.random()*(600-radius));
+        let color=randomColor();
+        function createCircle() {
+            let circle = new Circle(x, y, radius);
+            cir.beginPath();
+            cir.arc(circle.x, circle.y, circle.radius, 0, 2 * Math.PI);
+            cir.fillStyle = color;
+            cir.fill();
+        }
+        function createMultipleCircle() {
+            for (let i=0;i<30;i++){
+                createCircle();
+            }
+        }
+        let dx=2;
+        let dy=2;
+        setInterval(function () {
+            x+=dx;
+            y+=dy;
+            cir.clearRect(0, 0, 1200, 600);
+            createCircle();
+            if (x<radius||x>1200-radius){
+                dx=-dx;
+            }
+            if (y<radius||y>600-radius){
+                dy=-dy
+            }
+        });
+    </script>
+</canvas>
+</body>
+</html>
